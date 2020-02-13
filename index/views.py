@@ -3,8 +3,9 @@ from collections import namedtuple
 from django.contrib.auth.models import User
 from django.db import connections
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
+from .forms import PostForm
 from .models import Post
 from mysql_models.models import IndexProduct, IndexImage
 
@@ -49,7 +50,7 @@ class PostDetailView(DetailView):
     model = Post
     context_object_name = 'post'
 
-    # def get_queryset(self, request, *args, **kwargs):
-    #     super(PostDetailView, self).get_queryset(self, *args, **kwargs)
-    #     post = get_object_or_404(Post, id=kwargs['pk'])
-    #     return render(request, self.template_name, {'post': post})
+
+class PostCreateView(CreateView):
+    template_name = 'create.html'
+    form_class = PostForm
