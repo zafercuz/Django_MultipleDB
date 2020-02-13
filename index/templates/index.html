@@ -13,7 +13,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ post }}</h5>
                   <p class="card-text">{{ post.content|safe }}</p>
-                  <a href="#" class="btn btn-primary">Read More</a>
+                  <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read More</a>
                 </div>
               </div>
             </div>

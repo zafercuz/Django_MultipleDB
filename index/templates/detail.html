@@ -1,87 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container my-5 py-5 bg-light">
-  <div class="row mb-5">
-    <div class="col-md-12">
-      <div class="card">
-        <h5 class="card-header">Postgres Posts</h5>
-        <div class="card-body">
-          <div class="row">
-            {% for post in posts %}
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{ post }}</h5>
-                  <p class="card-text">{{ post.content|safe }}</p>
-                  <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row mt-5">
-    <div class="col-md-12">
-      <div class="card">
-        <h5 class="card-header">MySQL Posts</h5>
-        <div class="card-body">
-          <div class="row">
-            {% for post in posts_mysql %}
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-text">{{ post.id }}</p>
-                  <p class="card-text">{{ post.image_url }}</p>
-                  <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row mt-5">
-    <div class="col-md-12">
-      <div class="card">
-        <h5 class="card-header">MySQL Products</h5>
-        <div class="card-body">
-          <div class="row">
-            {% for post in product_mysql %}
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-text"><b>ID: </b>{{ post.id }}</p>
-                  <p class="card-text">{{ post }}</p>
-                  <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {% for category in product_category_mysql %}
-  {{ category }}
-  {% endfor %}
-
-</div>
+ID: {{ post.id }} <br>
+Title: {{ post.title }} <br>
+Content: {{ post.content }}
 
 {% endblock %}

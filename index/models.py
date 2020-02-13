@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -14,3 +15,6 @@ class Post(models.Model):
              update_fields=None, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('detail', args=[self.id])
