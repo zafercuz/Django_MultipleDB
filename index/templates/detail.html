@@ -2,8 +2,14 @@
 
 {% block content %}
 
-ID: {{ post.id }} <br>
-Title: {{ post.title }} <br>
-Content: {{ post.content|safe }}
+<div class="mb-4">
+  <a href="{% url 'update' pk=post.id %}" class="btn btn-info">Edit</a>
+  <a href="{% url 'delete' pk=post.id %}" class="btn btn-danger">Delete</a>
+</div>
+<div>
+  ID: {{ post.id }} <br>
+  Title: {{ post.title }} <br>
+  Content: {{ post.content|safe }}
+</div>
 
 {% endblock %}

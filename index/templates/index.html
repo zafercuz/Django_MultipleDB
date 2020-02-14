@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
 {% block content %}
 <a href="{% url 'create' %}" class="btn btn-primary mb-2">Create Post</a>
 <div class="row mb-5">
@@ -13,7 +14,7 @@
             <div class="card mb-2">
               <div class="card-body">
                 <h5 class="card-title">{{ post }}</h5>
-                <p class="card-text">{{ post.content|safe }}</p>
+                <p class="card-text">{{ post.content|safe|slice:"255" }}</p>
                 <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read More</a>
               </div>
             </div>

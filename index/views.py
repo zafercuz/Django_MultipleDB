@@ -1,9 +1,11 @@
 from collections import namedtuple
 
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import connections
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .forms import PostForm
 from .models import Post
@@ -52,5 +54,56 @@ class PostDetailView(DetailView):
 
 
 class PostCreateView(CreateView):
-    template_name = 'create.html'
+    template_name = 'create-update.html'
     form_class = PostForm
+
+    def get_context_data(self, **kwargs):
+        context = super(PostCreateView, self).get_context_data(**kwargs)
+        context['card_header'] = "Create Post"
+        return context
+
+    def form_valid(self, form):
+        response = super(PostCreateView, self).form_valid(form)
+        messages.success(self.request, "Post successfully created!")
+        return response
+
+
+class PostUpdateView(UpdateView):
+    template_name = 'create-update.html'
+    form_class = PostForm
+
+    def get_object(self):
+        id_ = self.kwargs.get("pk")
+        return get_object_or_404(Post, id=id_)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostUpdateView, self).get_context_data(**kwargs)
+        context['card_header'] = "Update Post"
+        context['update'] = 1
+        return context
+
+    def form_valid(self, form):
+        response = super(PostUpdateView, self).form_valid(form)
+        messages.success(self.request, "Post successfully updated!")
+        return response
+
+
+class PostDeleteView(DeleteView):
+    template_name = 'delete.html'
+    model = Post
+    success_url = reverse_lazy('index')
+    context_object_name = "post"
+
+    def get_object(self):
+        id_ = self.kwargs.get("pk")
+        return get_object_or_404(Post, id=id_)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDeleteView, self).get_context_data(**kwargs)
+        context['card_header'] = "Delete Post"
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        response = super(PostDeleteView, self).delete(request, *args, **kwargs)
+        messages.success(self.request, "Post successfully deleted!")
+        return response
