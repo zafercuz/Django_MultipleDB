@@ -4,8 +4,9 @@ from django_summernote.admin import SummernoteModelAdmin
 
 
 class PostAdmin(SummernoteModelAdmin):
-    list_display = ('title', 'content',)
-    fields = ('title', 'content', )
+    list_display = ('title', 'author', )
+    list_editable = ('author', )
+    exclude = ('slug', )
     summernote_fields = ('content',)
 
 

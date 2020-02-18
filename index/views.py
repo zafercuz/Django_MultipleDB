@@ -1,9 +1,8 @@
 from collections import namedtuple
 
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import connections
-from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -53,7 +52,7 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'create-update.html'
     form_class = PostForm
 
@@ -68,13 +67,10 @@ class PostCreateView(CreateView):
         return response
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
     template_name = 'create-update.html'
     form_class = PostForm
-
-    def get_object(self):
-        id_ = self.kwargs.get("pk")
-        return get_object_or_404(Post, id=id_)
 
     def get_context_data(self, **kwargs):
         context = super(PostUpdateView, self).get_context_data(**kwargs)
@@ -87,16 +83,18 @@ class PostUpdateView(UpdateView):
         messages.success(self.request, "Post successfully updated!")
         return response
 
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
-class PostDeleteView(DeleteView):
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'delete.html'
     model = Post
     success_url = reverse_lazy('index')
     context_object_name = "post"
-
-    def get_object(self):
-        id_ = self.kwargs.get("pk")
-        return get_object_or_404(Post, id=id_)
 
     def get_context_data(self, **kwargs):
         context = super(PostDeleteView, self).get_context_data(**kwargs)
@@ -107,3 +105,9 @@ class PostDeleteView(DeleteView):
         response = super(PostDeleteView, self).delete(request, *args, **kwargs)
         messages.success(self.request, "Post successfully deleted!")
         return response
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False

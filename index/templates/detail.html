@@ -2,10 +2,13 @@
 
 {% block content %}
 
+{% if post.author == user %}
 <div class="mb-4">
   <a href="{% url 'update' pk=post.id %}" class="btn btn-info">Edit</a>
   <a href="{% url 'delete' pk=post.id %}" class="btn btn-danger">Delete</a>
 </div>
+{% endif %}
+
 <div>
   ID: {{ post.id }} <br>
   Title: {{ post.title }} <br>
