@@ -6,8 +6,9 @@ from index.models import Post
 
 
 @receiver(post_save, sender=Post)
-def post_blog_notification(sender, instance, **kwargs):
+def post_blog_notification(sender, instance, created, **kwargs):
     """
     actor, recipient, verb, action_object, target, level, description, public, timestamp, **kwargs
     """
-    notify.send(instance.author, recipient=instance.author, verb='You have created', description=instance)
+    if created:
+        notify.send(instance.author, recipient=instance.author, verb='You have created', description=instance)
