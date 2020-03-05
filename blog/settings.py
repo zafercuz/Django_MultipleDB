@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Apps
     'index.apps.IndexConfig',
     'inbox_notifications.apps.InboxNotificationsConfig',
+    'account',
     'mysql_models',
 
     # Third party libraries
@@ -170,16 +171,20 @@ SUMMERNOTE_THEME = 'bs4'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+AUTH_USER_MODEL = 'myaccount.User'
+
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'account.forms.SignupForm'
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode, default
