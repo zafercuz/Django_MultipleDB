@@ -1,0 +1,42 @@
+{% extends 'notification-base.html' %}
+
+{% block notificationContent %}
+
+<table class="table">
+  <thead>
+    <tr class="d-flex">
+      <th class="col-sm-8">Notification</th>
+      <th class="col-sm-2">From</th>
+      <th class="col-sm-2">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if notifications|length > 0 %}
+    {% for notification in notifications %}
+      <tr class="d-flex" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>
+        <td class="col-sm-8 test"><a href="{% url 'notification-detail' notification.slug %}" class="stretched-link text-decoration-none">
+          {{ notification.verb|slice:100 }}{% if notification.description %}:
+          {{ notification.description|slice:100 }}
+          {% endif %}
+        </a></td>
+        <td class="col-sm-2">{{ notification.actor }}</td>
+        <td class="col-sm-2">on {{ notification.timestamp|date:'M. d, Y' }}</td>
+      </tr>
+    {% endfor %}
+  {% else %}
+  <tr class="d-flex">
+    <td class="col-sm-12 text-center">
+      <h3>No notification</h3>
+    </td>
+  </tr>
+  {% endif %}
+  </tbody>
+</table>
+
+<style>
+.test:hover {
+ background-color:#f0f0f0;
+}
+
+</style>
+{% endblock %}

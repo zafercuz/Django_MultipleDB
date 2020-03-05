@@ -62,6 +62,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        form.instance.author = self.request.user
         response = super(PostCreateView, self).form_valid(form)
         messages.success(self.request, "Post successfully created!")
         return response
@@ -79,6 +80,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        form.instance.author = self.request.user
         response = super(PostUpdateView, self).form_valid(form)
         messages.success(self.request, "Post successfully updated!")
         return response

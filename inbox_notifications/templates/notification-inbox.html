@@ -1,0 +1,99 @@
+{% extends 'notification-base.html' %}
+
+{% block notificationContent %}
+
+<div class="row border-bottom pb-2">
+  <div class="col-sm-1">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="">
+      <label class="form-check-label font-weight-bold">
+        All
+      </label>
+    </div>
+  </div>
+  <div class="col-sm-7 font-weight-bold">Notification</div>
+  <div class="col-sm-2 font-weight-bold">From</div>
+  <div class="col-sm-2 font-weight-bold">Date</div>
+</div>
+<div class="row">
+  {% if notifications|length > 0 %}
+  {% for notification in notifications %}
+  {% if not notification.deleted %}
+  <div class="col-sm-1 py-2" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="">
+    </div>
+  </div>
+  <div class="col-sm-7 py-2 test" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>
+    <a href="{% url 'notification-detail' notification.slug %}" class="stretched-link text-decoration-none">
+      {{ notification.verb|slice:100 }}{% if notification.description %}:
+      {{ notification.description|slice:100 }}
+      {% endif %}
+    </a></td>
+  </div>
+  <div class="col-sm-2 py-2" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>{{ notification.actor }}</div>
+  <div class="col-sm-2 py-2" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>on {{ notification.timestamp|date:'M. d, Y' }}</div>
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <div class="col-sm-12 text-center">
+    <h3 class="mt-3">No notifications</h3>
+  </div>
+  {% endif %}
+</div>
+
+<!--<table class="table">-->
+<!--  <thead>-->
+<!--  <tr class="d-flex">-->
+<!--    <th class="col-sm-1">-->
+<!--      <div class="form-check">-->
+<!--        <input class="form-check-input" type="checkbox" value="">-->
+<!--        <label class="form-check-label font-weight-bold">-->
+<!--          All-->
+<!--        </label>-->
+<!--      </div>-->
+<!--    </th>-->
+<!--    <th class="col-sm-7">Notification</th>-->
+<!--    <th class="col-sm-2">From</th>-->
+<!--    <th class="col-sm-2">Date</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  {% if notifications|length > 0 %}-->
+<!--  {% for notification in notifications %}-->
+<!--  {% if not notification.deleted %}-->
+<!--  <tr class="d-flex" {% if not notification.unread %}style="background-color:#f0f0f0;" {% endif %}>-->
+<!--    <td class="col-sm-1">-->
+<!--      <div class="form-check">-->
+<!--        <input class="form-check-input" type="checkbox" value="">-->
+<!--      </div>-->
+<!--    </td>-->
+<!--    <td class="col-sm-7 test"><a href="{% url 'notification-detail' notification.slug %}"-->
+<!--                                 class="stretched-link text-decoration-none">-->
+<!--      {{ notification.verb|slice:100 }}{% if notification.description %}:-->
+<!--      {{ notification.description|slice:100 }}-->
+<!--      {% endif %}-->
+<!--    </a></td>-->
+<!--    <td class="col-sm-2">{{ notification.actor }}</td>-->
+<!--    <td class="col-sm-2">on {{ notification.timestamp|date:'M. d, Y' }}</td>-->
+<!--  </tr>-->
+<!--  {% endif %}-->
+<!--  {% endfor %}-->
+<!--  {% else %}-->
+<!--  <tr class="d-flex">-->
+<!--    <td class="col-sm-12 text-center">-->
+<!--      <h3>No notification</h3>-->
+<!--    </td>-->
+<!--  </tr>-->
+<!--  {% endif %}-->
+<!--  </tbody>-->
+<!--</table>-->
+
+<style>
+.test:hover {
+ background-color:#f0f0f0;
+}
+
+
+</style>
+{% endblock %}

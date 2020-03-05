@@ -1,0 +1,18 @@
+{% extends 'notification-base.html' %}
+
+{% block notificationContent %}
+<div class="card">
+  <h5 class="card-header">
+    Notification Detail
+  </h5>
+  <div class="card-body">
+    <p class="card-text">{{ notification.verb }} {{ notification.description }}</p>
+  </div>
+  <div class="card-footer text-muted d-flex justify-content-between">
+    {{ notification.timestamp|date:'M. d, Y' }}
+    <a href="{% url 'notification-move-to-trash' notification.slug %}" class="btn btn-danger btn-sm">
+      <i class="fas fa-trash"></i> Move to trash
+    </a>
+  </div>
+</div>
+{% endblock %}

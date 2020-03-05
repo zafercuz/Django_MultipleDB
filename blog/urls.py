@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
+import notifications.urls
 from blog import settings
 
 urlpatterns = [
@@ -24,6 +24,8 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('', include('index.urls')),
     path('accounts/', include('allauth.urls')),
+    path('testinbox/', include('inbox_notifications.urls')),
+    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 
 if settings.DEBUG:

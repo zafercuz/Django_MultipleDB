@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+{{ title }}
+{% endblock head_title %}
+
+{% load i18n %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-2">
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="{% url 'testinbox' %}" class="stretched-link text-decoration-none text-primary">
+            <i class="fas fa-inbox"></i>
+            Inbox
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'notification-trash' %}" class="stretched-link text-decoration-none text-danger">
+            <i class="fas fa-trash"></i> Trash
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-primary btn-sm" disabled>Mark as Read</button>
+        <button class="btn btn-danger btn-sm" disabled>Move to Trash</button>
+      </div>
+      <div class="card-body">
+        {% block notificationContent %}
+        {% endblock notificationContent %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.list-group-item:hover {
+ background-color:#f0f0f0;
+}
+
+
+
+
+
+
+</style>
+{% endblock content %}

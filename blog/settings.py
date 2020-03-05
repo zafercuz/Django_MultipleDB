@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # Apps
-    'index',
+    'index.apps.IndexConfig',
+    'inbox_notifications.apps.InboxNotificationsConfig',
     'mysql_models',
 
     # Third party libraries
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'notifications',
 ]
 
 SITE_ID = 1
@@ -146,7 +148,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static/'),
+    ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -162,7 +169,6 @@ DEFAULT_FROM_EMAIL = 'Honda Motor World Inc Team <' + config['EMAIL_USER'] + '>'
 SUMMERNOTE_THEME = 'bs4'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
@@ -187,4 +193,8 @@ SUMMERNOTE_CONFIG = {
         # Change editor size
         'width': '100%',
     }
+}
+
+DJANGO_NOTIFICATIONS_CONFIG = {
+    'SOFT_DELETE': True,
 }
