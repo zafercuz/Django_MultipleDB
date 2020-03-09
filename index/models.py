@@ -27,3 +27,6 @@ class EmailAddress(models.Model):
     employee_code = models.CharField(max_length=50, blank=False, primary_key=True)
     employee_name = models.CharField(max_length=255, blank=True, null=True)
     email_address = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'ID:{self.employee_code}, Name:{self.employee_name}'

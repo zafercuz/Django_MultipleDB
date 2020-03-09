@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .forms import PostForm
-from .models import Post
+from .models import Post, EmailAddress
 from mysql_models.models import IndexProduct, IndexImage
 
 
@@ -39,6 +39,8 @@ class IndexView(ListView):
             row = namedtuplefetchall(cursor)
 
         print(row)
+        email = EmailAddress.objects.all().count()
+        chunk_size = 1000
         context['title'] = 'Multiple Database'
         context['posts_mysql'] = posts_mysql
         context['product_mysql'] = product_mysql
